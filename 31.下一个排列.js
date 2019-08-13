@@ -19,7 +19,7 @@ var nextPermutation = function (nums) {
 
                     // 从小到大排序i往后的数组
                     let sortArr = nums.splice(i, nums.length - i);
-                    sortArr.sort((a,b)=>{a-b});
+                    sortArr.sort( (a,b) => a-b );
                     nums.push(...sortArr)
                     return
                 }
