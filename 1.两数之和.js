@@ -1,11 +1,29 @@
+/*
+ * @lc app=leetcode.cn id=1 lang=javascript
+ *
+ * [1] 两数之和
+ * 因为答案必然时两位数
+ * 所以可以利用map暂存target-nums[i]
+ * 再查询map是否存在nums[i], 9-3=6  9-6=3;
+ */
+
+// @lc code=start
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
 var twoSum = function (nums, target) {
-    let i = 0;
-    let j = 0;
-    for (; i < nums.length; i++) { //第一层循环
-        for (j = i + 1; j < nums.length; j++) { //第二层循环                   
-            if (nums[i] + nums[j] === target) {
-                return i > j ? [j, i] : [i, j];
-            }
+    const map = new Map();
+    const len = nums.length - 1;
+
+    for (let i = 0; i <= len; i++) {
+        if (map.has(nums[i])) {
+            return [map.get(nums[i]), i];
+        } else {
+            const diff = target - nums[i];
+            map.set(diff, i);
         }
     }
 };
+// @lc code=end
