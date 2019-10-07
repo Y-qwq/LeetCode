@@ -1,3 +1,11 @@
+/*
+ * @lc app=leetcode.cn id=11 lang=javascript
+ *
+ * [11] 盛最多水的容器
+ * 双指针法，指针从两边往中间移动，每次仅移动其中指针所指较小的那边。
+ */
+
+// @lc code=start
 /**
  * @param {number[]} height
  * @return {number}
@@ -13,4 +21,5 @@ var maxArea = function (height) {
     }
     return max;
 };
-console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]))
+// @lc code=end
+

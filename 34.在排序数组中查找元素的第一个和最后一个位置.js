@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=34 lang=javascript
  *
  * [34] 在排序数组中查找元素的第一个和最后一个位置
+ * 要求复杂度log(n) 二分法
+ * 
  */
 /**
  * 特征：顺序结构、时间复杂度 O(log n)——分治算法
@@ -10,38 +12,41 @@
  * @return {number[]}
  */
 var searchRange = function (nums, target) {
-    let firstMiddle = getMiddle(nums.length);
-    search(firstMiddle);
+    let res = [-1, -1];
+    if (nums.length === 0) return res;
+    search(0, nums.length - 1);
 
-    function search(middle) {
-        // 中间值刚好相等，往左右两边扫描
-        if (target === nums[middle]) {
-            let lTemp = middle;
-            let rTemp = middle;
-            // 左
-            while (nums[lTemp] === target) {
-                lTemp--;
+    function search(l, r) {
+        const middle = getMiddle(l, r);
+        // 当查找到目标值时，从index左右扩散查找
+        if (nums[middle] === target) {
+            let start = middle;
+            let end = middle;
+            while (nums[start] === target) {
+                start--;
             }
-            // 右
-            while (nums[rTemp] === target) {
-                rTemp++
+            while (nums[end] === target) {
+                end++;
             }
-            console.log([lTemp + 1, rTemp - 1])
-            return 'qunimaye';
+            res = [++start, --end];
+            return;
         }
 
-        let nextMiddle = getMiddle(middle)
-        if (nextMiddle === 0) return [-1, -1];
-
-        if (target > nums[middle]) {
-            search(nextMiddle + middle);
+        if (nums[middle] > target) {
+            // 处理由于取整造成的的当r===getMiddle(l,r)时的情况
+            r = r === middle ? r - 1 : middle;
         } else {
-            search(nextMiddle);
+            l = l === middle ? l + 1 : middle;
         }
+        // 为查找到目标值时跳出递归
+        if (l >= r && nums[l] !== nums[r]) return;
 
+        return search(l, r);
     }
-};
 
-function getMiddle(number) {
-    return Math.floor(number / 2);
-}
+    function getMiddle(l, r) {
+        return ~~((l + r) / 2);
+    }
+
+    return res;
+};
